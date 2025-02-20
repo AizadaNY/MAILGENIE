@@ -3,11 +3,13 @@ import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-console.log('started route.ts')
+
+
 const prisma = new PrismaClient();
+
 export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
-  const SIGNING_SECRET = process.env.SIGNING_SECRET
+  const SIGNING_SECRET = process.env.SIGNING_SECRET;
  
   if (!SIGNING_SECRET) {
     throw new Error('Error: Please add SIGNING_SECRET from Clerk Dashboard to .env or .env.local')
