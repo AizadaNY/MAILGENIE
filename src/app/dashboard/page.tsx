@@ -11,7 +11,6 @@ export default async function DashboardPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold">Welcome, {user.firstName}!</h1>
-      <p>Your email: {user.emailAddresses[0].emailAddress}</p>
       <p>Dashboard content goes here...</p>
     </div>
   );
