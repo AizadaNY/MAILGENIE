@@ -14,10 +14,6 @@ export default function SignInPage() {
     }
   }, [isSignedIn, router, isLoaded]);
 
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <SignIn />
-    </div>
-  );
+  return <SignIn />
 }
 

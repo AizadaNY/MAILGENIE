@@ -1,5 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import Sidebar from "@/components/sidebar";
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -7,11 +8,10 @@ export default async function DashboardPage() {
   if (!user) {
     redirect("/auth/sign-in"); // Redirect if not authenticated
   }
-
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Welcome, {user.firstName}!</h1>
-      <p>Dashboard content goes here...</p>
-    </div>
+   
+   return (
+    <div>
+    <Sidebar />
+   </div>
   );
 }
