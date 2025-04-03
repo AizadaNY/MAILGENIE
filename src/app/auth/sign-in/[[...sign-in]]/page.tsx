@@ -14,6 +14,24 @@ export default function SignInPage() {
     }
   }, [isSignedIn, router, isLoaded]);
 
-  return <SignIn />
+  if (!isLoaded) {
+    return <p className="text-center mt-10">Loading...</p>;
+  }
+
+    return (
+        <div className="flex min-h-screen items-center justify-center">
+          <SignIn 
+            path="/auth/sign-in"
+            routing="path"
+            signInUrl="/auth/sign-in"
+            appearance={{
+              elements: {
+                formButtonPrimary: "bg-blue-500 hover:bg-blue-600",
+                footerActionLink: "text-blue-500 hover:text-blue-600",
+              },
+            }}
+          />
+        </div>
+      );
 }
 

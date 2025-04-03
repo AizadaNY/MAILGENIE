@@ -22,6 +22,9 @@ model User {
   updatedAt  DateTime @updatedAt
   stripeId   String?
   billings   Billings[]
+  campaigns Campaign[]
+  domains Domain[]
+  subscriptions Subscription[]
 }
 
 model Billings {
@@ -39,11 +42,13 @@ enum Plans {
 }
 
 model Campaign {
-  id String @id @default(uuid())
-  name String
+  id        String @id @default(uuid())
+  name      String
   customers String[]
-  userld String
-  createdAt DateTime
+  userId    String
+  createdAt DateTime @default(now())
+  user      User    @relation(fields: [userId], references: [id])
+  domain    Domain?   
 }
 
 model Domain {
@@ -51,7 +56,23 @@ model Domain {
   name    String
   icon    String
   userId  String
-  compaignId  String
+  campaignId  String @unique
+  user      User    @relation(fields: [userId], references: [id])
+  campaign  Campaign @relation(fields: [campaignId], references: [id])
+  helpdesks HelpDesk[]
+  chatbots Chatbot[]
+  filterquestions FilterQuestions[]
+  customers Customer[]
+  products Product[]
+  bookings Bookings?
+}
+
+model HelpDesk {
+  id      String @id @default(uuid())
+  question  String
+  answer    String
+  domainId  String
+  domain Domain @relation(fields: [domainId], references: [id])
 }
 
 model Chatbot{
@@ -62,13 +83,7 @@ model Chatbot{
   textColor String
   helpdesk  String
   domainId  String
-}
-
-model HelpDesk {
-  id      String @id @default(uuid())
-  question  String
-  answer    String
-  domainId  String
+  domain Domain @relation(fields: [domainId], references: [id])
 }
 
 model FilterQuestions{
@@ -77,12 +92,7 @@ model FilterQuestions{
   question String 
   answered String
   domainId String
-}
-
-model Customer{
-  id       String      @id @default(uuid())
-  email    String
-  domainId String
+  domain Domain @relation(fields: [domainId], references: [id])
 }
 
 model Product {
@@ -95,11 +105,22 @@ model Product {
   domain Domain @relation(fields: [domainId], references: [id])
 }
 
+model Customer{
+  id       String      @id @default(uuid())
+  email    String
+  domainId String
+  domain Domain @relation(fields: [domainId], references: [id])
+  customerresponces CustomerResponces[]
+  chatrooms Chatroom[]
+  bookings Bookings[]
+}
+
 model CustomerResponces {
   id         String @id @default(uuid())
   question   String
   answered   String
   customerId String 
+  customer Customer @relation(fields: [customerId], references: [id])
 }
 
 model Chatroom {
@@ -110,6 +131,7 @@ model Chatroom {
   updatedAt DateTime
   customerId String
   customer Customer @relation(fields: [customerId], references: [id])
+  chatmessage ChatMessage[]
 }
 
 model Bookings {
@@ -119,7 +141,7 @@ model Bookings {
   email String
   customerId String
   customer Customer @relation(fields: [customerId], references: [id])
-  domainId String
+  domainId String @unique
   domain Domain @relation(fields: [domainId], references: [id])
   createdAt DateTime
 }
@@ -132,12 +154,22 @@ model ChatMessage{
   updatedAt DateTime
   chatRoomId  String
   seen Boolean
+  chatroom Chatroom @relation(fields: [chatRoomId], references: [id])
 }
 
 enum Role {
   Admin
   user
   }
+
+model Subscription {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  plan      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id])
+}
 
 
 

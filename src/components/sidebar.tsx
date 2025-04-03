@@ -18,10 +18,11 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     return (
-        <div className={`h-screen bg-gray-100 text-gray-900 flex flex-col ${isCollapsed ? 'w-20' : 'w-64'} transition-all duration-300`}>
+        <div className="flex h-screen">
+        <div className={`bg-gray-100 text-gray-900 flex flex-col ${isCollapsed ? 'w-16' : 'w-64'} fixed top-0 left-0 h-full`}>
             {/* Sidebar Header */}
-            <div className="flex items-center justify-between h-20 bg-gray-100 border-b border-gray-100 p-4">
-                <h1 className={`text-3xl font-bold text-gray-600 transition-all ${isCollapsed ? 'hidden' : 'block'}`}>
+            <div className="flex items-center justify-between h-20 bg-gray-100 border-b p-4">
+                <h1 className={`text-3xl font-bold text-gray-600 transition-all duration-300 ${isCollapsed ? 'hidden' : 'block'}`}>
                     <Link href="/">MailGenie</Link>
                 </h1>
                 <button
@@ -59,6 +60,7 @@ const Sidebar = () => {
                     )}
                 </button>
             </div>
+        </div>
         </div>
     );
 }
